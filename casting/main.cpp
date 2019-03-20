@@ -185,8 +185,24 @@ void main()
 	reinterpret_cast_fun();
 
 	/*const_cast*/
+
+	/*如果我们定义了一个非const的变量，却使用了一个指向const值的指针来指向它（这不是没事找事嘛），
+	在程序的某处我们想改变这个变量的值了，但手头只持有指针，这是const_cast就可以用到了*/
 	int var = 10;
 	cout << var << endl;
-	const_cast_fun(&var);
+	const_cast_fun(&var); 
 	cout << var << endl;
+
+	/*对声明为const的变量来说，常量就是常量，任你各种转化，常量的值就是不会变。*/
+	const int constant = 26;
+	const int* const_p = &constant;
+	int* modifier = const_cast<int*>(const_p);
+	*modifier = 3;
+	cout << "constant:  " << constant << "  adderss:  " << &constant << endl;
+	cout << "*modifier:  " << *modifier << "  adderss:  " << modifier << endl;
+
+	const char* p = "123";
+	char* c = const_cast<char*>(p);
+	c[0] = 1; //会报错，只可读不可写
+	getchar();
 }
